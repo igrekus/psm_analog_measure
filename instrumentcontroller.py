@@ -144,7 +144,7 @@ class InstrumentController(QObject):
         pna.send('SENS1:SWE:MODE CONT')
         pna.send(f'FORM:DATA ASCII')
 
-        src.set_current(chan=1, value=500, unit='mA')
+        src.set_current(chan=1, value=10, unit='mA')
         src.set_voltage(chan=1, value=0, unit='V')
         src.set_output(chan=1, state='ON')
 
