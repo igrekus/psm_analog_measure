@@ -231,8 +231,9 @@ class MeasureResult:
         mins = [min(vals) for vals in zip(*self._s21s)]
         res = itertools.groupby(mins, key=lambda x: x > level)
         res = [list(ls) for val, ls in res if val]
-        max_size = max(len(el) for el in res)
-        res = list(filter(lambda x: len(x) == max_size, res))[0]
+        if res:
+            max_size = max(len(el) for el in res)
+            res = list(filter(lambda x: len(x) == max_size, res))[0]
 
         min_index = 0
         max_index = 0
@@ -242,8 +243,8 @@ class MeasureResult:
         except ValueError:
             pass
 
-        self._kp_freq_min = self._freqs[min_index] if min_index else 'n/a'
-        self._kp_freq_max = self._freqs[max_index] if max_index else 'n/a'
+        self._kp_freq_min = round(self._freqs[min_index] / 1_000_000_000, 2) if min_index else 'n/a'
+        self._kp_freq_max = round(self._freqs[max_index] / 1_000_000_000, 2) if max_index else 'n/a'
 
     def _load_ideal(self):
         for i in range(64):
@@ -383,12 +384,11 @@ class MeasureResult:
 {self._phase_err_max[2]:.02f} град на {f3} ГГц
 
 S:
-{int(self._s)} град
+{self._s:.02f} град
 
 Нижняя граница РЧ, Fн:
-{self._kp_freq_min / 1_000_000_000:.02f} ГГц
+{self._kp_freq_min} ГГц
 
 Верхняя граница РЧ, Fв:
-{self._kp_freq_max / 1_000_000_000:.02f} ГГц
+{self._kp_freq_max} ГГц
 '''
-
