@@ -117,7 +117,14 @@ class InstrumentController(QObject):
         self._clear()
         self._init(secondary)
 
-        return self._measure_s_params(param, secondary)
+        res = self._measure_s_params(param, secondary)
+
+        src = self._instruments['Источник']
+        src.set_current(chan=1, value=0, unit='mA')
+        src.set_voltage(chan=1, value=0, unit='V')
+        src.set_output(chan=1, state='OFF')
+
+        return res
 
     def _clear(self):
         self._phase_values.clear()
