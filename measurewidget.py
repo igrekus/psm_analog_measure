@@ -149,7 +149,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._spinFreqEnd.setMinimum(0)
         self._spinFreqEnd.setMaximum(20)
         self._spinFreqEnd.setSingleStep(1)
-        self._spinFreqEnd.setValue(4)
+        self._spinFreqEnd.setValue(3.25)
         self._spinFreqEnd.setSuffix(' ГГц')
         self._devices._layout.addRow('F2=', self._spinFreqEnd)
 
@@ -165,7 +165,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._spinVoltEnd.setMinimum(0)
         self._spinVoltEnd.setMaximum(10)
         self._spinVoltEnd.setSingleStep(0.1)
-        self._spinVoltEnd.setValue(1)
+        self._spinVoltEnd.setValue(10)
         self._spinVoltEnd.setSuffix(' В')
         self._devices._layout.addRow('U2=', self._spinVoltEnd)
 
@@ -173,7 +173,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._spinVoltStep.setMinimum(0)
         self._spinVoltStep.setMaximum(10)
         self._spinVoltStep.setSingleStep(0.1)
-        self._spinVoltStep.setValue(0.1)
+        self._spinVoltStep.setValue(1)
         self._spinVoltStep.setSuffix(' В')
         self._devices._layout.addRow('Uшаг=', self._spinVoltStep)
 
@@ -181,7 +181,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._spinKp.setMinimum(-100)
         self._spinKp.setMaximum(100)
         self._spinKp.setSingleStep(1)
-        self._spinKp.setValue(-9)
+        self._spinKp.setValue(-20)
         self._spinKp.setSuffix(' дБ')
         self._devices._layout.addRow('Кп=', self._spinKp)
 
