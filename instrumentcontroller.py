@@ -25,7 +25,7 @@ class InstrumentController(QObject):
 
         self.requiredInstruments = {
             'Анализатор': NetworkAnalyzerFactory('GPIB1::9::INSTR'),
-            'Источник': SourceFactory('GPIB1::10::INSTR')
+            'Источник': SourceFactory('GPIB1::4::INSTR')
         }
 
         self.deviceParams = {
