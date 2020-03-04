@@ -169,7 +169,6 @@ class InstrumentController(QObject):
         for ucontrol in values:
             self._phase_values.append(ucontrol)
 
-            # TODO !!!!
             src.set_voltage(chan=1, value=ucontrol, unit='V')
             if not mock_enabled:
                 time.sleep(0.5)
