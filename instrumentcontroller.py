@@ -164,8 +164,9 @@ class InstrumentController(QObject):
         u2 = secondary['U2']
         ustep = secondary['Ustep']
 
-        values = np.linspace(u1, u2, int((u2 - u1) / ustep) + 1, endpoint=True)
-        for ucontrol, file in zip(values, [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60]):
+        values = [round(x, 1) for x in np.linspace(u1, u2, int((u2 - u1) / ustep) + 1, endpoint=True)]
+        # for ucontrol, file in zip(values, [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60]):
+        for ucontrol in values:
             self._phase_values.append(ucontrol)
 
             # TODO !!!!
