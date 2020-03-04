@@ -155,7 +155,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
 
         self._spinVoltStart = QDoubleSpinBox(parent=self)
         self._spinVoltStart.setMinimum(0)
-        self._spinVoltStart.setMaximum(10)
+        self._spinVoltStart.setMaximum(20)
         self._spinVoltStart.setSingleStep(0.1)
         self._spinVoltStart.setValue(0)
         self._spinVoltStart.setSuffix(' В')
@@ -163,7 +163,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
 
         self._spinVoltEnd = QDoubleSpinBox(parent=self)
         self._spinVoltEnd.setMinimum(0)
-        self._spinVoltEnd.setMaximum(10)
+        self._spinVoltEnd.setMaximum(20)
         self._spinVoltEnd.setSingleStep(0.1)
         self._spinVoltEnd.setValue(10)
         self._spinVoltEnd.setSuffix(' В')
@@ -171,7 +171,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
 
         self._spinVoltStep = QDoubleSpinBox(parent=self)
         self._spinVoltStep.setMinimum(0)
-        self._spinVoltStep.setMaximum(10)
+        self._spinVoltStep.setMaximum(20)
         self._spinVoltStep.setSingleStep(0.1)
         self._spinVoltStep.setValue(1)
         self._spinVoltStep.setSuffix(' В')
