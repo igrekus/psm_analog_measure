@@ -36,9 +36,9 @@ class PrimaryPlotWidget(QWidget):
             },
             '02': {
                 'xlabel': 'V, В',
-                'xlim': [],
+                'xlim': [0, 20],
                 'ylabel': 'φ(v)',
-                'ylim': []
+                'ylim': [-100, 300]
             },
             '12': {
                 'xlabel': 'F, ГГц',
@@ -134,7 +134,7 @@ class PrimaryPlotWidget(QWidget):
         vswr_out = self._result.vswr_out
         phase_errs = self._result.phase_err
         phase_v = self._result.phase_v
-        volts = self._result._ideal_phase[1:]
+        volts = self._result._ideal_phase
         # s21_err = self._result.s21_err
         # s21_rmse = self._result.s21_rmse
         # misc = self._result.misc

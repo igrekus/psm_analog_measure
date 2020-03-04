@@ -176,9 +176,9 @@ class MeasureResult:
         i_max = len(self._s21s_ph_err[0]) - 1
         i_mid = int(i_max / 2)
         self._ph_v = [
-            [s[i_min] for s in self._s21s_ph_err],
-            [s[i_mid] for s in self._s21s_ph_err],
-            [s[i_max] for s in self._s21s_ph_err]
+            [0] + [s[i_min] for s in self._s21s_ph_err],
+            [0] + [s[i_mid] for s in self._s21s_ph_err],
+            [0] + [s[i_max] for s in self._s21s_ph_err]
         ]
 
     def _calc_s21_rmse(self):
@@ -240,6 +240,8 @@ class MeasureResult:
         try:
             min_index = mins.index(res[0])
             max_index = mins.index(res[-1])
+        except IndexError:
+            pass
         except ValueError:
             pass
 
