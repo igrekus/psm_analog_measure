@@ -47,6 +47,10 @@ def norm_phase_error(array):
     return [a + 360 if need else a for a in array]
 
 
+def norm_phase_error_forced(array):
+    return [a + 360 for a in array]
+
+
 def calc_rmse_phase(values, mean):
     return math.sqrt(sum(pow(v, 2) for v in values) / len(values))
 
@@ -166,6 +170,12 @@ class MeasureResult:
         ph0 = self._s21s_ph[0]
         self._s21s_ph_err = [calc_phase_error(s, ph0, ideal) for s, ideal in zip(self._s21s_ph[1:], self._ideal_phase[1:])]
         self._s21s_ph_err = [norm_phase_error(s) for s in self._s21s_ph_err]
+
+        for i in range(len(self._s21s_ph_err) - 1):
+            ph_next = self._s21s_ph_err[i + 1][0]
+            ph_prev = self._s21s_ph_err[i][0]
+            if ph_next - ph_prev < - 250:
+                self._s21s_ph_err[i + 1] = norm_phase_error_forced(self._s21s_ph_err[i + 1])
 
     def _calc_s21_err(self):
         means = [statistics.mean(vs) for vs in zip(*self._s21s)]
