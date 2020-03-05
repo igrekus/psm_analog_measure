@@ -77,8 +77,8 @@ def generateValue(data):
 
 class MeasureResult:
     adjust_dirs = {
-        1: 'data/+20',
-        2: 'data/+125',
+        1: 'data/+25',
+        2: 'data/+85',
         3: 'data/-60',
     }
 
