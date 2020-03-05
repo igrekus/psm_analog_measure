@@ -152,6 +152,7 @@ class PrimaryPlotWidget(QWidget):
 
         for xs, ys in zip(itertools.repeat(freqs, n - 1), phase_errs):
             self._plotS21PhaseErr.plot(xs, ys)
+        self._plotS21PhaseErr.axhline(0, 0, 1, linewidth=0.8, color='0.3', linestyle='-')
 
         for xs, ys in zip(itertools.repeat(volts, len(phase_v)), phase_v):
             self._plotS21PhaseRmse.plot(xs, ys)
