@@ -1,5 +1,6 @@
 import itertools
 import math
+import os
 import random
 import statistics
 
@@ -75,6 +76,11 @@ def generateValue(data):
 
 
 class MeasureResult:
+    adjust_dirs = {
+        1: 'data/+20',
+        2: 'data/+125',
+        3: 'data/-60',
+    }
 
     def __init__(self, ):
         self.headers = list()
@@ -107,6 +113,7 @@ class MeasureResult:
         self._misc = list()
 
         self.adjust = False
+        self._adjust_dir = self.adjust_dirs[1]
         self.ready = False
 
     def __bool__(self):
@@ -255,35 +262,38 @@ class MeasureResult:
         self._kp_freq_min = round(self._freqs[min_index] / 1_000_000_000, 2)
         self._kp_freq_max = round(self._freqs[max_index] / 1_000_000_000, 2)
 
-    def _load_ideal(self):
-        for i in range(64):
-            fn = f'data/s{i}.s2p'
-            try:
-                with open(fn, mode='rt', encoding='utf-8') as f:
-                    fs = []
-                    s11dbs = []
-                    s11degs = []
-                    s21dbs = []
-                    s21degs = []
-                    s12dbs = []
-                    s12degs = []
-                    s22dbs = []
-                    s22degs = []
+    def _list_s2p(self):
+        path = f'./{self.adjust_set}'
+        return [f'{path}/{f}' for f in (os.listdir(path)) if os.path.isfile(f'{path}/{f}') and f.endswith('.s2p')]
 
-                    for line in list(f.readlines())[5:]:
-                        res = map(float, line.strip().split())
-                        frq, s11db, s11deg, s21db, s21deg, s12db, s12deg, s22db, s22deg = res
-                        fs.append(frq)
-                        s11dbs.append(s11db)
-                        s11degs.append(s11deg)
-                        s21dbs.append(s21db)
-                        s21degs.append(s21deg)
-                        s12dbs.append(s12db)
-                        s12degs.append(s12deg)
-                        s22dbs.append(s22db)
-                        s22degs.append(s22deg)
-            except Exception as e:
-                print(e)
+    def _load_ideal(self):
+        print(f'reading adjust set from: {self.adjust_set}/')
+        files = self._list_s2p()
+        for file in files:
+            with open(f'{file}', mode='rt', encoding='utf-8') as f:
+                fs = []
+                s11dbs = []
+                s11degs = []
+                s21dbs = []
+                s21degs = []
+                s12dbs = []
+                s12degs = []
+                s22dbs = []
+                s22degs = []
+
+                for line in list(f.readlines())[5:]:
+                    res = map(float, line.strip().split())
+                    frq, s11db, s11deg, s21db, s21deg, s12db, s12deg, s22db, s22deg = res
+                    fs.append(frq)
+                    s11dbs.append(s11db)
+                    s11degs.append(s11deg)
+                    s21dbs.append(s21db)
+                    s21degs.append(s21deg)
+                    s12dbs.append(s12db)
+                    s12degs.append(s12deg)
+                    s22dbs.append(s22db)
+                    s22degs.append(s22deg)
+
             self._s11s.append(s11dbs)
             self._s21s.append(s21dbs)
             self._s21s_ph.append(s21degs)
@@ -364,6 +374,14 @@ class MeasureResult:
     @property
     def misc(self):
         return self._misc
+
+    @property
+    def adjust_set(self):
+        return self._adjust_dir
+
+    @adjust_set.setter
+    def adjust_set(self, value):
+        self._adjust_dir = self.adjust_dirs[value]
 
     @property
     def stats(self):

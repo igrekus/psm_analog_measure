@@ -95,15 +95,17 @@ class MainWindow(QMainWindow):
             ('Корректировка', self._instrumentController.result.adjust),
             ('Калибровка', self._instrumentController.cal_set),
             ('Только основные', only_main_states),
+            ('Набор для коррекции', [1, '+20', '+125', '-60']),
         ]
 
         values = fedit(data=data, title='Параметры')
         if not values:
             return
 
-        adjust, cal_set, only_main_states = values
+        adjust, cal_set, only_main_states, adjust_set = values
 
         self._instrumentController.result.adjust = adjust
+        self._instrumentController.result.adjust_set = adjust_set
         self._instrumentController.cal_set = cal_set
         self._plotWidget.only_main_states = only_main_states
 
