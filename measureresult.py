@@ -93,7 +93,7 @@ class MeasureResult:
         self._ph_v = list()
         self._s11s = list()
         self._s22s = list()
-        self._ideal_phase = list()
+        self._volts = list()
 
         self._vswr_in = list()
         self._vswr_out = list()
@@ -129,7 +129,7 @@ class MeasureResult:
         self._ph_v.clear()
         self._s11s.clear()
         self._s22s.clear()
-        self._ideal_phase.clear()
+        self._volts.clear()
 
         self._vswr_in.clear()
         self._vswr_out.clear()
@@ -175,7 +175,7 @@ class MeasureResult:
     def _calc_phase_err(self):
         self._s21s_ph = [unwrap(s) for s in self._s21s_ph]
         ph0 = self._s21s_ph[0]
-        self._s21s_ph_err = [calc_phase_error(s, ph0, ideal) for s, ideal in zip(self._s21s_ph[1:], self._ideal_phase[1:])]
+        self._s21s_ph_err = [calc_phase_error(s, ph0, ideal) for s, ideal in zip(self._s21s_ph[1:], self._volts[1:])]
         self._s21s_ph_err = [norm_phase_error(s) for s in self._s21s_ph_err]
 
         for i in range(len(self._s21s_ph_err) - 1):
@@ -269,7 +269,10 @@ class MeasureResult:
     def _load_ideal(self):
         print(f'reading adjust set from: {self.adjust_set}/')
         files = self._list_s2p()
-        for file in files:
+        volts = []
+        sorted_files = sorted([(float(file.split('/')[-1][:-4].replace('_', '.')), file) for file in files], key=lambda el: el[0])
+        for volt, file in sorted_files:
+            volts.append(volt)
             with open(f'{file}', mode='rt', encoding='utf-8') as f:
                 fs = []
                 s11dbs = []
@@ -299,6 +302,7 @@ class MeasureResult:
             self._s21s_ph.append(s21degs)
             self._s22s.append(s22dbs)
 
+        self._volts = volts
         self._freqs = fs
         self._process()
 
@@ -313,7 +317,7 @@ class MeasureResult:
 
         points = int(args[0])
         s2p = list(args[1])
-        self._ideal_phase = list(args[2])
+        self._volts = list(args[2])
         self._secondaryParams = dict(args[3])
 
         if self.adjust:
