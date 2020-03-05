@@ -5,12 +5,7 @@ import random
 import statistics
 
 
-# TODO calc mean from F-err
 # TODO plot only main states
-
-# + TODO: plot phase_i - phase_0
-# TODO: plot phase-volt diagram for min, mid, max
-
 
 def unwrap(xw):
     dist = 180
