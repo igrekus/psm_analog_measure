@@ -5,8 +5,6 @@ import random
 import statistics
 
 
-# TODO plot only main states
-
 def unwrap(xw):
     dist = 180
     xu = list(xw)
