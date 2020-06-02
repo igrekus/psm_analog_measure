@@ -52,7 +52,9 @@ class InstrumentController(QObject):
             'U1': 0,
             'U2': 1,
             'Ustep': 0.1,
-            'kp': 0
+            'kp': 0,
+            'Fborder1': 4,
+            'Fborder2': 8
         }
 
         self.span = 0.1
