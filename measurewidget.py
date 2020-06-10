@@ -215,6 +215,14 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._spinFreq1.valueChanged.connect(self.on_params_changed)
         self._spinFreq2.valueChanged.connect(self.on_params_changed)
 
+        self._spinFreqStart.valueChanged.connect(self.on_spinFreqStart_valueChanged)
+        self._spinFreqEnd.valueChanged.connect(self.on_spinFreqEnd_valueChanged)
+        self._spinFreq1.valueChanged.connect(self.on_spinFreq1_valueChanged)
+        self._spinFreq2.valueChanged.connect(self.on_spinFreq2_valueChanged)
+
+        self.on_spinFreqStart_valueChanged(2.0)
+        self.on_spinFreqEnd_valueChanged(4.0)
+
     def _modePreConnect(self):
         super()._modePreConnect()
         # self._spinFreq.setEnabled(True)
@@ -249,12 +257,29 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
                                         self.measureTaskComplete,
                                         [self._selectedDevice, self._params]))
 
-    def on_params_changed(self, value):
-        self._spinFreq1.setMaximum(self._spinFreqEnd.value())
-        self._spinFreq1.setMinimum(self._spinFreqStart.value())
-        self._spinFreq2.setMaximum(self._spinFreqEnd.value())
-        self._spinFreq2.setMinimum(self._spinFreqStart.value())
+    @pyqtSlot(float)
+    def on_spinFreqStart_valueChanged(self, value):
+        self._spinFreqEnd.setMinimum(value)
+        self._spinFreq1.setMinimum(value)
+        self._spinFreq1.setMaximum(self._spinFreq2.value())
+        self._spinFreq2.setMinimum(self._spinFreq1.value())
 
+    @pyqtSlot(float)
+    def on_spinFreqEnd_valueChanged(self, value):
+        self._spinFreqStart.setMaximum(value)
+        self._spinFreq2.setMaximum(value)
+        self._spinFreq2.setMinimum(self._spinFreq1.value())
+        self._spinFreq1.setMaximum(self._spinFreq2.value())
+
+    @pyqtSlot(float)
+    def on_spinFreq1_valueChanged(self, value):
+        self._spinFreq2.setMinimum(value)
+
+    @pyqtSlot(float)
+    def on_spinFreq2_valueChanged(self, value):
+        self._spinFreq1.setMaximum(value)
+
+    def on_params_changed(self, value):
         params = {
             'Pin': self._spinPowIn.value(),
             'F1': self._spinFreqStart.value(),
