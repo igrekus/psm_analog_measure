@@ -251,9 +251,9 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
 
     def on_params_changed(self, value):
         self._spinFreq1.setMaximum(self._spinFreqEnd.value())
-        self._spinFreq1.setMinimum(self._spinState.value())
+        self._spinFreq1.setMinimum(self._spinFreqStart.value())
         self._spinFreq2.setMaximum(self._spinFreqEnd.value())
-        self._spinFreq2.setMinimum(self._spinState.value())
+        self._spinFreq2.setMinimum(self._spinFreqStart.value())
 
         params = {
             'Pin': self._spinPowIn.value(),
