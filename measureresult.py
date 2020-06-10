@@ -69,6 +69,7 @@ def generateValue(data):
 
 
 def _find_freq_index(freqs: list, freq):
+    freq = freq * 1_000_000_000
     return min(range(len(freqs)), key=lambda i: abs(freqs[i] - freq))
 
 
@@ -223,7 +224,7 @@ class MeasureResult:
         self._min_freq_index = _find_freq_index(self._freqs, self._secondaryParams['Fborder1'])
         self._max_freq_index = _find_freq_index(self._freqs, self._secondaryParams['Fborder2'])
 
-        mid = abs(self._max_freq_index - self._min_freq_index) // 2
+        mid = self._min_freq_index + abs(self._max_freq_index - self._min_freq_index) // 2
 
         vs = list(zip(*self.s21))
         self._s21_mins = [min(vs[self._min_freq_index]), min(vs[mid]), min(vs[self._max_freq_index])]
@@ -396,11 +397,15 @@ class MeasureResult:
 
     @property
     def stats(self):
-        mid = len(self.freqs) // 2
-        f1 = round(self.freqs[0] / 1_000_000_000, 2)
+        low = self._min_freq_index
+        high = self._max_freq_index
+        mid = low + (high - low) // 2
+        f1 = round(self.freqs[low] / 1_000_000_000, 2)
         f2 = round(self.freqs[mid] / 1_000_000_000, 2)
-        f3 = round(self.freqs[-1] / 1_000_000_000, 2)
+        f3 = round(self.freqs[high] / 1_000_000_000, 2)
 
+        kp_freq_min = f'{self._kp_freq_min:.02f} ГГц' if self._kp_freq_min != 'n/a' else 'n/a'
+        kp_freq_max = f'{self._kp_freq_max:.02f} ГГц' if self._kp_freq_max != 'n/a' else 'n/a'
         return f'''Потери, минимум:
 {self._s21_mins[0]:.02f} дБ на {f1} ГГц
 {self._s21_mins[1]:.02f} дБ на {f2} ГГц
@@ -425,8 +430,8 @@ S:
 {self._s:.02f} град
 
 Нижняя граница РЧ, Fн:
-{self._kp_freq_min} ГГц
+{kp_freq_min}
 
 Верхняя граница РЧ, Fв:
-{self._kp_freq_max} ГГц
+{kp_freq_max}
 '''
