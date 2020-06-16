@@ -58,8 +58,7 @@ class InstrumentController(QObject):
         }
 
         self.span = 0.1
-        # self.sweep_points = 51
-        self.sweep_points = 201
+        self.sweep_points = 81
         self.cal_set = 'Upr_tst'
 
         self._instruments = dict()
@@ -166,8 +165,7 @@ class InstrumentController(QObject):
         u2 = secondary['U2']
         ustep = secondary['Ustep']
 
-        values = [round(x, 1) for x in np.linspace(u1, u2, int((u2 - u1) / ustep) + 1, endpoint=True)]
-        # for ucontrol, file in zip(values, [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60]):
+        values = [0.1, 0.25, 0.5, 0.75, 1.25, 1.5, 1.75, 1,10.25, 10.5, 10.75, 10, 11.25, 11.5, 11.75, 11, 12, 2.25, 2.5, 2.75, 2, 3.25, 3.5, 3.75, 3, 4.25, 4.5, 4.75, 4, 5.25, 5.5, 5.75, 5, 6.25, 6.5, 6.75, 6, 7.25, 7.5, 7.75, 7, 8.25, 8.5, 8.75, 8, 9.25, 9.5, 9.75, 9]
         for ucontrol in values:
             self._phase_values.append(ucontrol)
 
@@ -182,11 +180,10 @@ class InstrumentController(QObject):
             pna.send(f'CALC:DATA:SNP:PORTs:Save "1,2", "d:/ksa/psm_analog_s2p/s{str(f"{ucontrol:.01f}").replace(".", "_")}.s2p"')
             pna.send(f'MMEM:STOR "d:/ksa/psm_analog_ports2/s{str(f"{ucontrol:.01f}").replace(".", "_")}.s2p"')
 
-            # with open(f's2p_{code}.s2p', mode='wt', encoding='utf-8') as f:
-            #     f.write(res)
-            # if mock_enabled:
-            #     with open(f's2p_{file}.s2p', mode='rt', encoding='utf-8') as f:
-            #         res = list(f.readlines())[0].strip()
+            if mock_enabled:
+                fn = f'ref/sample_data/out_s{ucontrol:05.2f}.s2p'
+                with open(fn, mode='rt', encoding='utf-8') as f:
+                    res = list(f.readlines())[0].strip()
             out.append(parse_float_list(res))
 
             if not mock_enabled:
