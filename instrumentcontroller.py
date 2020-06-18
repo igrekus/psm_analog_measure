@@ -1,5 +1,4 @@
 import time
-import numpy as np
 
 from os.path import isfile
 from PyQt5.QtCore import QObject, pyqtSlot
