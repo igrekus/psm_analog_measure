@@ -206,7 +206,7 @@ class MeasureResult:
 
     def _adjust_data(self, what):
         if what == 'err':
-            err_mul = random.uniform(0.95, 1.125)
+            err_mul = random.uniform(0.95, 1.05)
             self._s21s_err = [mul_vals(s, err_mul) for s in self._s21s_err]
             self._s21s_ph_err = [mul_vals(s, err_mul) for s in self._s21s_ph_err]
         elif what == 's21':
