@@ -206,7 +206,7 @@ class MeasureResult:
 
     def _adjust_data(self, what):
         if what == 'err':
-            err_mul = random.uniform(0.875, 1.125)
+            err_mul = random.uniform(0.95, 1.05)
             self._s21s_err = [mul_vals(s, err_mul) for s in self._s21s_err]
             self._s21s_ph_err = [mul_vals(s, err_mul) for s in self._s21s_ph_err]
         elif what == 's21':
@@ -410,28 +410,28 @@ class MeasureResult:
 {self._s21_mins[0]:.02f} дБ на {f1} ГГц
 {self._s21_mins[1]:.02f} дБ на {f2} ГГц
 {self._s21_mins[2]:.02f} дБ на {f3} ГГц
-
+---
 КСВ вх, макс:
 {self._vswr_in_max[0]:.02f} на {f1} ГГц
 {self._vswr_in_max[1]:.02f} на {f2} ГГц
 {self._vswr_in_max[2]:.02f} на {f3} ГГц
-
+---
 КСВ вых, макс:
 {self._vswr_out_max[0]:.02f} на {f1} ГГц
 {self._vswr_out_max[1]:.02f} на {f2} ГГц
 {self._vswr_out_max[2]:.02f} на {f3} ГГц
-
+---
 φ, набег:
 {self._phase_err_max[0]:.02f} град на {f1} ГГц
 {self._phase_err_max[1]:.02f} град на {f2} ГГц
 {self._phase_err_max[2]:.02f} град на {f3} ГГц
-
+---
 S:
 {self._s:.02f} град
-
+---
 Нижняя граница РЧ, Fн:
 {kp_freq_min}
-
+---
 Верхняя граница РЧ, Fв:
 {kp_freq_max}
 '''
