@@ -1,4 +1,5 @@
 import time
+import numpy as np
 
 from os.path import isfile
 from PyQt5.QtCore import QObject, pyqtSlot
@@ -166,7 +167,9 @@ class InstrumentController(QObject):
 
         values = [round(x, 1) for x in np.linspace(u1, u2, int((u2 - u1) / ustep) + 1, endpoint=True)]
         if mock_enabled:
-            values = [0.1, 0.25, 0.5, 0.75, 1.25, 1.5, 1.75, 1,10.25, 10.5, 10.75, 10, 11.25, 11.5, 11.75, 11, 12, 2.25, 2.5, 2.75, 2, 3.25, 3.5, 3.75, 3, 4.25, 4.5, 4.75, 4, 5.25, 5.5, 5.75, 5, 6.25, 6.5, 6.75, 6, 7.25, 7.5, 7.75, 7, 8.25, 8.5, 8.75, 8, 9.25, 9.5, 9.75, 9]
+            values = [0.1, 0.25, 0.5, 0.75, 1.25, 1.5, 1.75, 1, 10.25, 10.5, 10.75, 10, 11.25, 11.5, 11.75, 11, 12,
+                      2.25, 2.5, 2.75, 2, 3.25, 3.5, 3.75, 3, 4.25, 4.5, 4.75, 4, 5.25, 5.5, 5.75, 5, 6.25, 6.5, 6.75,
+                      6, 7.25, 7.5, 7.75, 7, 8.25, 8.5, 8.75, 8, 9.25, 9.5, 9.75, 9]
 
         for ucontrol in values:
             self._phase_values.append(ucontrol)
